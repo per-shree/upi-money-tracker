@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}All Transactions{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>All Transactions</h2>
+    <a href="{{ url_for('add_transaction') }}" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i> Add Transaction
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">Transaction History</h5>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>UPI App</th>
+                        <th class="text-end">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if transactions %}
+                        {% for t in transactions %}
+                        <tr>
+                            <td>{{ t.date.split('T')[0] }}</td>
+                            <td>{{ t.description }}</td>
+                            <td>
+                                <span class="badge 
+                                    {% if t.category == 'Food' %}bg-danger
+                                    {% elif t.category == 'Shopping' %}bg-info
+                                    {% elif t.category == 'Transportation' %}bg-warning
+                                    {% elif t.category == 'Entertainment' %}bg-success
+                                    {% elif t.category == 'Education' %}bg-primary
+                                    {% else %}bg-secondary{% endif %}">
+                                    {{ t.category }}
+                                </span>
+                            </td>
+                            <td>{{ t.upi_app }}</td>
+                            <td class="text-end text-danger">₹{{ "%.2f"|format(t.amount) }}</td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="text-center py-3">
+                                No transactions found. 
+                                <a href="{{ url_for('add_transaction') }}">Add your first transaction</a> or 
+                                <a href="{{ url_for('route_add_sample_data') }}">add sample data</a>.
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
