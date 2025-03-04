@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Dashboard</h2>
+
+<div class="row">
+    <!-- Left column -->
+    <div class="col-lg-8">
+        <!-- Balance and Budget Card -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Financial Overview</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="text-center mb-3">
+                            <i class="bi bi-wallet2 display-5 text-primary"></i>
+                            <h5>Account Balance</h5>
+                            <h3 class="{% if balance < 0 %}text-danger{% else %}text-success{% endif %}">
+                                ₹{{ "%.2f"|format(balance) }}
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="text-center mb-3">
+                            <i class="bi bi-cash-stack display-5 text-primary"></i>
+                            <h5>Monthly Budget</h5>
+                            <h3 class="text-primary">
+                                ₹{{ "%.2f"|format(profile.monthly_budget) }}
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="text-center mb-3">
+                            <i class="bi bi-graph-up display-5 text-primary"></i>
+                            <h5>Budget Used</h5>
+                            <h3 class="{% if budget_percent > 80 %}text-danger{% elif budget_percent > 50 %}text-warning{% else %}text-success{% endif %}">
+                                {{ "%.1f"|format(budget_percent) }}%
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Progress bar -->
+                <div class="progress" style="height: 25px;">
+                    <div class="progress-bar 
+                        {% if budget_percent > 80 %}bg-danger
+                        {% elif budget_percent > 50 %}bg-warning
+                        {% else %}bg-success{% endif %}" 
+                        role="progressbar" 
+                        style="width: {{ budget_percent }}%;" 
+                        aria-valuenow="{{ budget_percent }}" 
+                        aria-valuemin="0" 
+                        aria-valuemax="100">
+                        {{ "%.1f"|format(budget_percent) }}%
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Recent Transactions -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Recent Transactions</h5>
+                <a href="{{ url_for('all_transactions') }}" class="btn btn-sm btn-light">View All</a>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Date</th>
+                                <th>Description</th>
+                                <th>Category</th>
+                                <th>UPI App</th>
+                                <th class="text-end">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if transactions %}
+                                {% for t in transactions %}
+                                <tr>
+                                    <td>{{ t.date.split('T')[0] }}</td>
+                                    <td>{{ t.description }}</td>
+                                    <td>
+                                        <span class="badge 
+                                            {% if t.category == 'Food' %}bg-danger
+                                            {% elif t.category == 'Shopping' %}bg-info
+                                            {% elif t.category == 'Transportation' %}bg-warning
+                                            {% elif t.category == 'Entertainment' %}bg-success
+                                            {% elif t.category == 'Education' %}bg-primary
+                                            {% else %}bg-secondary{% endif %}">
+                                            {{ t.category }}
+                                        </span>
+                                    </td>
+                                    <td>{{ t.upi_app }}</td>
+                                    <td class="text-end text-danger">₹{{ "%.2f"|format(t.amount) }}</td>
+                                </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="5" class="text-center py-3">
+                                        No transactions found. 
+                                        <a href="{{ url_for('add_transaction') }}">Add your first transaction</a> or 
+                                        <a href="{{ url_for('route_add_sample_data') }}">add sample data</a>.
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Right column -->
+    <div class="col-lg-4">
