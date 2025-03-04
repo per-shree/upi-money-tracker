@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Profile Settings</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Your Name</label>
+                        <input type="text" class="form-control" id="name" name="name" value="{{ profile.name }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="account_balance" class="form-label">Current Account Balance (₹)</label>
+                        <input type="number" step="0.01" class="form-control" id="account_balance" name="account_balance" value="{{ profile.account_balance }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="monthly_budget" class="form-label">Monthly Budget (₹)</label>
+                        <input type="number" step="0.01" min="0" class="form-control" id="monthly_budget" name="monthly_budget" value="{{ profile.monthly_budget }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="parent_email" class="form-label">Parent's Email</label>
+                        <input type="email" class="form-control" id="parent_email" name="parent_email" value="{{ profile.parent_email }}">
+                        <div class="form-text">Enter your parent's email to share spending reports (optional)</div>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="share_with_parents" name="share_with_parents" {% if profile.share_with_parents %}checked{% endif %}>
+                        <label class="form-check-label" for="share_with_parents">Share spending details with parents</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
