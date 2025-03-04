@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPI Tracker - {% block title %}Home{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <style>
+        .navbar-brand {
+            font-weight: bold;
+            color: #4a6ee0 !important;
+        }
+        .bg-primary {
+            background-color: #4a6ee0 !important;
+        }
+        .btn-primary {
+            background-color: #4a6ee0;
+            border-color: #4a6ee0;
+        }
+        .btn-primary:hover, .btn-primary:focus {
+            background-color: #3a5dcf;
+            border-color: #3a5dcf;
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .card-header {
+            border-radius: 10px 10px 0 0 !important;
+            font-weight: bold;
+        }
+        .alert {
+            border-radius: 10px;
+        }
+        .money-saved {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .money-spent {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        .dashboard-icon {
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+        .savings-tip {
+            background-color: #f8f9fa;
+            border-left: 4px solid #4a6ee0;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        main {
+            flex: 1;
+        }
+        footer {
+            margin-top: auto;
+            padding: 20px 0;
+            background-color: #f8f9fa;
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('index') }}">
+                <i class="bi bi-wallet2"></i> UPI Tracker
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    {% if session.username %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('dashboard') }}">
+                            <i class="bi bi-speedometer2"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('add_transaction') }}">
+                            <i class="bi bi-plus-circle"></i> Add Transaction
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('analytics') }}">
+                            <i class="bi bi-graph-up"></i> Analytics
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('profile') }}">
+                            <i class="bi bi-person-circle"></i> Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('logout') }}">
+                            <i class="bi bi-box-arrow-right"></i> Logout
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('login') }}">
+                            <i class="bi bi-box-arrow-in-right"></i> Login
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('register') }}">
+                            <i class="bi bi-person-plus"></i> Register
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash messages -->
+    <div class="container mt-3">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- Main content -->
+    <main class="container py-4">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-top">
+        <div class="container text-center">
+            <p class="mb-0">UPI Tracker - Track all your UPI spending in one place</p>
+            <small class="text-muted">A money management solution for students</small>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>
