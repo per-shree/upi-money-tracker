@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10 text-center">
+        <div class="py-5">
+            <h1 class="display-4 mb-4">Track Your UPI Spending</h1>
+            <p class="lead mb-4">
+                Monitor all your UPI transactions across different apps in one place and gain financial control.
+            </p>
+            
+            <div class="row mb-5">
+                <div class="col-md-3">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="bi bi-search display-4 text-primary mb-3"></i>
+                            <h5 class="card-title">Track All UPI Apps</h5>
+                            <p class="card-text">View spending across GooglePay, PhonePe, Paytm, and more in one dashboard.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="bi bi-tags display-4 text-primary mb-3"></i>
+                            <h5 class="card-title">Categorize Expenses</h5>
+                            <p class="card-text">Automatically sort your spending into meaningful categories.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="bi bi-bell display-4 text-primary mb-3"></i>
+                            <h5 class="card-title">Balance Reminders</h5>
+                            <p class="card-text">Get alerts when your account balance is low.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="bi bi-share display-4 text-primary mb-3"></i>
+                            <h5 class="card-title">Share With Parents</h5>
+                            <p class="card-text">Keep parents updated with your spending reports.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-5">
+                <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg me-3">Get Started</a>
+                <a href="{{ url_for('login') }}" class="btn btn-outline-primary btn-lg">Login</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
