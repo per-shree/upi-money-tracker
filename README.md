@@ -55,7 +55,7 @@ upi-tracker/
 
 1. Clone the repository or download the source code:
    ```
-   git clone https://github.com/yourusername/upi-tracker.git
+   git clone https://github.com/per-shree/upi-tracker.git
    cd upi-tracker
    ```
 
