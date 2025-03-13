@@ -55,8 +55,8 @@ upi-tracker/
 
 1. Clone the repository or download the source code:
    ```
-   git clone https://github.com/per-shree/upi-tracker.git
-   cd upi-tracker
+   git clone https://github.com/per-shree/upi-money-tracker.git
+   cd upi-money-tracker
    ```
 
 2. Create a virtual environment (recommended):
